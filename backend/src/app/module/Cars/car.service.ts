@@ -2,12 +2,8 @@ import { carSearchableFields, ICar, ICarFilters } from "./car.interface";
 import CarModel from "./car.model";
 
 const createCar = async (carData: ICar): Promise<ICar> => {
-  try {
-    const newCar = await CarModel.create(carData);
-    return newCar;
-  } catch (error) {
-    throw new Error("Failed to create car");
-  }
+  const newCar = await CarModel.create(carData);
+  return newCar;
 };
 
 const GetAllCars = async (filters: ICarFilters): Promise<ICar[]> => {
