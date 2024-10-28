@@ -40,8 +40,31 @@ const GetAllCars = async (filters: ICarFilters): Promise<ICar[]> => {
   const result = await CarModel.find(queryConditions);
   return result;
 };
-
+const GetSingleCar = async (carId: string): Promise<ICar | null> => {
+  const car = CarModel.findById(carId);
+  if (!car) {
+    throw new Error("No Car Found");
+  }
+  return car;
+};
+const DeleteCar = async (carId: string): Promise<ICar | null> => {
+  const car = CarModel.findByIdAndDelete(carId);
+  if (!car) {
+    throw new Error("No Car Found");
+  }
+  return car;
+};
+const UpdateCar = async (carId: string): Promise<ICar | null> => {
+  const car = CarModel.findByIdAndUpdate(carId);
+  if (!car) {
+    throw new Error("No Car Found");
+  }
+  return car;
+};
 export const CarService = {
   createCar,
   GetAllCars,
+  GetSingleCar,
+  DeleteCar,
+  UpdateCar,
 };
