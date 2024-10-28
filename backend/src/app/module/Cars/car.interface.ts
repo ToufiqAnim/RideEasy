@@ -23,3 +23,8 @@ export interface ICar {
   availability: boolean;
   images: string[];
 }
+export const carSearchableFields = ["make", "model", "category", "type"];
+export type ICarFilters = {
+  searchTerm?: string;
+  type?: string;
+};
