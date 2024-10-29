@@ -3,6 +3,7 @@ import { catchAsync } from "../../../shared/catchAsync";
 import { sendResponse } from "../../../shared/sendResponse";
 import { IUser } from "./User.interface";
 import { UserServices } from "./user.services";
+import httpStatus from "http-status";
 
 const GetAllUsers = catchAsync(async (req: Request, res: Response) => {
   const result = await UserServices.GetAllUsers();

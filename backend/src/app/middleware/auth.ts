@@ -3,6 +3,7 @@ import ApiError from "../../errors/ApiError";
 import { jwtHelpers } from "../../healpers/jwtHelpers";
 import config from "../../config";
 import { Secret } from "jsonwebtoken";
+import httpStatus from "http-status";
 
 const auth = () => async (req: Request, res: Response, next: NextFunction) => {
   try {
@@ -17,3 +18,4 @@ const auth = () => async (req: Request, res: Response, next: NextFunction) => {
     next(error);
   }
 };
+export default auth;
