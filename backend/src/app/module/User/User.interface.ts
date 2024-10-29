@@ -5,7 +5,7 @@ export interface IUser {
   name: string;
   email: string;
   password: string;
-  phoneNumber: string;
+  phoneNumber?: string;
 }
 export type IFindUser = {
   _id: string;

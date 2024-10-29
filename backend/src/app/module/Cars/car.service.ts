@@ -1,3 +1,4 @@
+import { JwtPayload } from "jsonwebtoken";
 import { carSearchableFields, ICar, ICarFilters } from "./car.interface";
 import CarModel from "./car.model";
 
@@ -57,6 +58,7 @@ const UpdateCar = async (carId: string): Promise<ICar | null> => {
   }
   return car;
 };
+
 export const CarService = {
   createCar,
   GetAllCars,
