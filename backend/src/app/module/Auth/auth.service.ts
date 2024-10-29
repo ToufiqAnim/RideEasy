@@ -6,7 +6,7 @@ import { IUser } from "../User/User.interface";
 import { Users } from "../User/user.model";
 import { TLoginResponse, TUserLogin } from "./auth.interface";
 
-const CreateUser = async (user: IUser): Promise<IUser> => {
+const SignUp = async (user: IUser): Promise<IUser> => {
   const createUser = Users.create(user);
   if (!createUser) {
     throw new Error("Failed to create user");
@@ -48,8 +48,40 @@ const Login = async (payload: TUserLogin): Promise<TLoginResponse> => {
     user,
   };
 };
+const RefreshToken = async (token: string) => {
+  let verifiedToken = null;
+  try {
+    verifiedToken = jwtHelpers.verifyToken(token, config.jwt.refresh as Secret);
+  } catch (err) {
+    throw new ApiError(httpStatus.FORBIDDEN, "Invalid Refresh Token");
+  }
+
+  // checking deleted user's refresh token
+  const { userEmail } = verifiedToken;
+
+  const isUserExist = await Users.isUserExist(userEmail);
+  if (!isUserExist) {
+    const error = new ApiError(httpStatus.FORBIDDEN, "User not exist");
+    return error;
+  }
+
+  //generate new token
+
+  const newAccessToken = jwtHelpers.createToken(
+    {
+      id: isUserExist._id,
+      userEmail: isUserExist.email,
+    },
+    config.jwt.secret as Secret,
+    config.jwt.secret_expires_in as string
+  );
+
+  return {
+    accessToken: newAccessToken,
+  };
+};
 export const AuthService = {
-  CreateUser,
+  SignUp,
   Login,
   RefreshToken,
 };
