@@ -9,17 +9,14 @@ const GetAllUsers = async (): Promise<IUser[] | null> => {
   }
   return users;
 };
-const GetUserById = async (
-  id: string,
-  payload: Partial<IUser>
-): Promise<IUser | null> => {
+const GetUserById = async (id: string): Promise<IUser | null> => {
   const user = await Users.findById(id);
   if (!user) {
     throw new Error("No user found!");
   }
   return user;
 };
-const updateUser = async (
+const UpdateUser = async (
   id: string,
   payload: Partial<IUser>
 ): Promise<IUser | null> => {
@@ -52,7 +49,7 @@ const GetUserProfile = async (user: JwtPayload): Promise<IUser | null> => {
 export const UserServices = {
   GetAllUsers,
   GetUserById,
-  updateUser,
+  UpdateUser,
   DeleteUser,
   GetUserProfile,
 };
