@@ -7,9 +7,11 @@ import { jwtHelpers } from "../../../healpers/jwtHelpers";
 import { IUser } from "../User/User.interface";
 import { Users } from "../User/user.model";
 import { TLoginResponse, TUserLogin } from "./auth.interface";
+import { AuthUtils } from "./Auth.utils";
 
-const SignUp = async (user: IUser): Promise<IUser> => {
-  const createUser = Users.create(user);
+const SignUp = async (payload: IUser): Promise<IUser> => {
+  payload.password = await AuthUtils.hashPassword(payload.password);
+  const createUser = Users.create(payload);
   if (!createUser) {
     throw new Error("Failed to create user");
   }
@@ -29,20 +31,21 @@ const Login = async (payload: TUserLogin): Promise<TLoginResponse> => {
     throw new ApiError(httpStatus.NOT_FOUND, "Password is incorrect");
   }
   // access token
-  const { _id, name, email: userEmail } = isUserExist;
+  const { _id, name, email: userEmail, role } = isUserExist;
   const accessToken = jwtHelpers.createToken(
-    { _id, name, userEmail },
+    { _id, name, userEmail, role },
     config.jwt.secret as Secret,
     config.jwt.secret_expires_in as string
   );
   const refreshToken = jwtHelpers.createToken(
-    { _id, name, userEmail },
+    { _id, name, userEmail, role },
     config.jwt.refresh as Secret,
     config.jwt.refresh_expires_in as string
   );
   const user = {
     id: isUserExist._id,
     name: isUserExist.name,
+    role: isUserExist.role,
   };
   return {
     accessToken,

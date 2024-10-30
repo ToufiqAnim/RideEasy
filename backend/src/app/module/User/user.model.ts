@@ -2,6 +2,7 @@ import bcrypt from "bcrypt";
 import { Schema, model } from "mongoose";
 import config from "../../../config";
 import { IFindUser, IUser, UserModel } from "./User.interface";
+import { ENUM_USER_ROLE } from "../../../enums/user";
 
 const UserSchema = new Schema<IUser, UserModel>(
   {
@@ -17,6 +18,11 @@ const UserSchema = new Schema<IUser, UserModel>(
     password: {
       type: String,
       required: true,
+    },
+    role: {
+      type: String,
+
+      default: ENUM_USER_ROLE.USER,
     },
   },
   {

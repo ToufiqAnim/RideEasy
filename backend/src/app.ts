@@ -12,13 +12,11 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use("/api", router);
+import httpStatus = require("http-status");
 
-// global error handler
+//global error handler
 app.use(globalErrorHandler);
 
-app.get("/", (req: Request, res: Response) => {
-  res.send("Welcome To Car Rental Backend !");
-});
 //handle not found
 app.use((req: Request, res: Response, next: NextFunction) => {
   res.status(httpStatus.NOT_FOUND).json({

@@ -59,6 +59,7 @@ const GetUserProfile = catchAsync(async (req: Request, res: Response) => {
     statusCode: httpStatus.OK,
     success: true,
     message: "Operation successful",
+    data: result,
   });
 });
 

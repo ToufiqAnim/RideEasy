@@ -1,7 +1,6 @@
 import { JwtPayload } from "jsonwebtoken";
 import { IUser } from "./User.interface";
 import { Users } from "./user.model";
-import httpStatus from "http-status";
 
 const GetAllUsers = async (): Promise<IUser[] | null> => {
   const users = await Users.find({});

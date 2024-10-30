@@ -1,7 +1,7 @@
 import { Schema, model } from "mongoose";
-import { Car } from "./car.interface";
+import { ICar } from "./car.interface";
 
-const carSchema = new Schema<Car>({
+const carSchema = new Schema<ICar>({
   make: { type: String, required: true },
   model: { type: String, required: true },
   type: { type: String, required: true },
@@ -17,16 +17,11 @@ const carSchema = new Schema<Car>({
     transmission: { type: String, required: true },
     capacity: { type: String, required: true },
   },
-  pricing: {
-    daily: { type: Number, required: true },
-    weekly: { type: Number, required: true },
-    monthly: { type: Number, required: true },
-    currency: { type: String, required: true },
-  },
+  pricing: { type: Number, required: true },
   availability: { type: Boolean, required: true },
   images: [{ type: String }],
 });
 
-const CarModel = model<Car>("Car", carSchema);
+const CarModel = model<ICar>("Car", carSchema);
 
 export default CarModel;

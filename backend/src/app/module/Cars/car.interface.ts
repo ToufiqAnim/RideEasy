@@ -14,12 +14,7 @@ export interface ICar {
     transmission: string;
     capacity: string;
   };
-  pricing: {
-    daily: number;
-    weekly: number;
-    monthly: number;
-    currency: string;
-  };
+  pricing: number;
   availability: boolean;
   images: string[];
 }
