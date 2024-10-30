@@ -23,16 +23,17 @@ const Login = catchAsync(async (req: Request, res: Response) => {
   const { ...data } = req.body;
   const result = await AuthService.Login(data);
   const { refreshToken, ...other } = result;
+  console.log(other);
   const cookieOption = {
     sequre: config.env === "production",
     httpOnly: true,
   };
-  res.cookie("refeshtoken", refreshToken, cookieOption);
+  res.cookie("refreshToken", refreshToken, cookieOption);
   sendResponse<TLoginResponse>(res, {
     statusCode: httpStatus.CREATED,
     success: true,
     message: "User logged in successfully",
-    data: result,
+    data: other,
   });
 });
 const RefreshToken = catchAsync(async (req: Request, res: Response) => {

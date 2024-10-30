@@ -7,10 +7,8 @@ import { jwtHelpers } from "../../../healpers/jwtHelpers";
 import { IUser } from "../User/User.interface";
 import { Users } from "../User/user.model";
 import { TLoginResponse, TUserLogin } from "./auth.interface";
-import { AuthUtils } from "./Auth.utils";
 
 const SignUp = async (payload: IUser): Promise<IUser> => {
-  payload.password = await AuthUtils.hashPassword(payload.password);
   const createUser = Users.create(payload);
   if (!createUser) {
     throw new Error("Failed to create user");
@@ -18,39 +16,36 @@ const SignUp = async (payload: IUser): Promise<IUser> => {
   return createUser;
 };
 const Login = async (payload: TUserLogin): Promise<TLoginResponse> => {
-  const { email, password } = payload;
   // user exist
-  const isUserExist = await Users.isUserExist(email);
+  const isUserExist = await Users.isUserExist(payload.email);
   if (!isUserExist) {
     throw new ApiError(httpStatus.NOT_FOUND, "User not found");
   }
+  // Compare entered password with the stored hash
   if (
     isUserExist.password &&
-    !(await Users.isPasswordMatched(password, isUserExist.password))
+    !(await Users.isPasswordMatched(payload.password, isUserExist.password))
   ) {
     throw new ApiError(httpStatus.NOT_FOUND, "Password is incorrect");
   }
   // access token
-  const { _id, name, email: userEmail, role } = isUserExist;
+  const { _id, name, email, role } = isUserExist;
   const accessToken = jwtHelpers.createToken(
-    { _id, name, userEmail, role },
+    { _id, name, email, role },
     config.jwt.secret as Secret,
     config.jwt.secret_expires_in as string
   );
+
   const refreshToken = jwtHelpers.createToken(
-    { _id, name, userEmail, role },
+    { _id, name, email, role },
     config.jwt.refresh as Secret,
     config.jwt.refresh_expires_in as string
   );
-  const user = {
-    id: isUserExist._id,
-    name: isUserExist.name,
-    role: isUserExist.role,
-  };
+
   return {
     accessToken,
     refreshToken,
-    user,
+    user: { id: _id, name, role },
   };
 };
 const RefreshToken = async (token: string) => {
@@ -62,9 +57,9 @@ const RefreshToken = async (token: string) => {
   }
 
   // checking deleted user's refresh token
-  const { userEmail } = verifiedToken;
+  const { email } = verifiedToken;
 
-  const isUserExist = await Users.isUserExist(userEmail);
+  const isUserExist = await Users.isUserExist(email);
   if (!isUserExist) {
     const error = new ApiError(httpStatus.FORBIDDEN, "User not exist");
     return error;
@@ -75,7 +70,7 @@ const RefreshToken = async (token: string) => {
   const newAccessToken = jwtHelpers.createToken(
     {
       id: isUserExist._id,
-      userEmail: isUserExist.email,
+      email: isUserExist.email,
     },
     config.jwt.secret as Secret,
     config.jwt.secret_expires_in as string

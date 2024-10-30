@@ -3,8 +3,8 @@ import { IBooking } from "./Booking.interface";
 
 const BookingSchema: Schema<IBooking> = new Schema(
   {
-    carId: { type: Schema.Types.ObjectId, ref: "CarModel", required: true },
-    userId: { type: Schema.Types.ObjectId, ref: "Users", required: true },
+    carId: { type: mongoose.Schema.Types.ObjectId, ref: "Car" },
+    userId: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
     startDate: { type: Date, required: true },
     endDate: { type: Date, required: true },
     totalAmount: { type: Number, required: true },

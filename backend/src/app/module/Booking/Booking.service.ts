@@ -1,4 +1,5 @@
 import { JwtPayload } from "jsonwebtoken";
+import httpStatus from "http-status";
 import { IBooking } from "./Booking.interface";
 import { Users } from "../User/user.model";
 import ApiError from "../../../errors/ApiError";
@@ -60,7 +61,43 @@ const CreateBooking = async (bookingData: IBooking, payload: JwtPayload) => {
 
   return newBooking;
 };
+const GetAllBookings = async () => {
+  const result = await Bookings.find({})
+    .populate("carId")
+    .populate("userId")
+    .lean();
+  if (!result || result.length === 0) {
+    throw new ApiError(httpStatus.NOT_FOUND, "No Data Found");
+  }
 
+  return result;
+};
+const GetUserBookings = async (payload: JwtPayload) => {
+  const { _id } = payload;
+  console.log("Searching bookings for user ID:", _id);
+  const result = await Bookings.find({ userId: _id }).populate("carId");
+
+  if (!result || result.length === 0) {
+    throw new ApiError(httpStatus.NOT_FOUND, "No Data Found");
+  }
+
+  return result;
+};
+const CancelBooking = async (id: string) => {
+  const result = await Bookings.findByIdAndUpdate(
+    id,
+    {
+      status: "cancelled",
+    },
+    {
+      new: true,
+    }
+  ).populate("carId");
+  return result;
+};
 export const BookingService = {
   CreateBooking,
+  GetAllBookings,
+  GetUserBookings,
+  CancelBooking,
 };

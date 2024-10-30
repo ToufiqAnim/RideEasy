@@ -21,7 +21,6 @@ const UserSchema = new Schema<IUser, UserModel>(
     },
     role: {
       type: String,
-
       default: ENUM_USER_ROLE.USER,
     },
   },
@@ -38,10 +37,10 @@ const UserSchema = new Schema<IUser, UserModel>(
 
 UserSchema.statics.isUserExist = async function (
   email: string
-): Promise<Pick<IFindUser, "_id" | "email" | "password"> | null> {
+): Promise<Pick<IFindUser, "_id" | "email" | "password" | "role"> | null> {
   return await Users.findOne(
     { email },
-    { _id: 1, name: 1, email: 1, password: 1 }
+    { _id: 1, name: 1, email: 1, password: 1, role: 1 }
   );
 };
 

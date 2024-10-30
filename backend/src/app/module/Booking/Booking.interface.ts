@@ -1,8 +1,8 @@
 import mongoose from "mongoose";
 
 export interface IBooking {
-  carId: mongoose.Types.ObjectId;
-  userId: mongoose.Types.ObjectId;
+  carId: { type: mongoose.Schema.Types.ObjectId; ref: "Car" };
+  userId: { type: mongoose.Schema.Types.ObjectId; ref: "User" };
   startDate: Date;
   endDate: Date;
   totalAmount: number;
