@@ -9,13 +9,19 @@ const CreateBooking = catchAsync(async (req: Request, res: Response) => {
   const bookingData = req.body;
   const user = req.user as JwtPayload;
   console.log(user);
-  const result = await BookingService.CreateBooking(bookingData, user);
+  const { booking, clientSecret } = await BookingService.CreateBooking(
+    bookingData,
+    user
+  );
 
   sendResponse(res, {
     statusCode: httpStatus.CREATED,
     success: true,
     message: "Booking created successfully",
-    data: result,
+    data: {
+      booking,
+      clientSecret,
+    },
   });
 });
 const GetAllBookings = catchAsync(async (req: Request, res: Response) => {
@@ -49,9 +55,21 @@ const CancelBooking = catchAsync(async (req: Request, res: Response) => {
     data: result,
   });
 });
+const UpdateBookingStatus = catchAsync(async (req: Request, res: Response) => {
+  const { bookingId } = req.params;
+  const { status } = req.body;
+  const result = await BookingService.updateBookingStatus(bookingId, status);
+  sendResponse(res, {
+    success: true,
+    statusCode: httpStatus.OK,
+    message: " Booking status updated successfully",
+    data: result,
+  });
+});
 export const BookingController = {
   CreateBooking,
   GetAllBookings,
   GetUserBookings,
   CancelBooking,
+  UpdateBookingStatus,
 };

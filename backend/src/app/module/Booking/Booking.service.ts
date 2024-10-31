@@ -5,6 +5,13 @@ import { Users } from "../User/user.model";
 import ApiError from "../../../errors/ApiError";
 import { Bookings } from "./Booking.model";
 import CarModel from "../Cars/car.model";
+import { Types } from "mongoose";
+import Stripe from "stripe";
+import config from "../../../config";
+
+const stripe = new Stripe(config.stripe.secretKey as string, {
+  apiVersion: "2024-09-30.acacia",
+});
 
 const CreateBooking = async (bookingData: IBooking, payload: JwtPayload) => {
   const { startDate, endDate, carId } = bookingData;
@@ -47,11 +54,20 @@ const CreateBooking = async (bookingData: IBooking, payload: JwtPayload) => {
 
   const payableAmount = days * carData.pricing; // Calculate based on price per day
 
+  // Create a payment intent with Stripe
+  const paymentIntent = await stripe.paymentIntents.create({
+    amount: payableAmount * 100,
+    currency: "usd",
+    metadata: { bookingId: new Types.ObjectId().toString() },
+  });
+
   // Create new booking
   const newBooking = await Bookings.create({
     ...bookingData,
     userId: user._id,
     totalAmount: payableAmount,
+    paymentIntentId: paymentIntent.id,
+    status: "pending",
   });
 
   // Populate user and car data after creating the booking
@@ -59,7 +75,10 @@ const CreateBooking = async (bookingData: IBooking, payload: JwtPayload) => {
     .populate("userId")
     .populate("carId"); */
 
-  return newBooking;
+  return {
+    booking: newBooking,
+    clientSecret: paymentIntent.client_secret,
+  };
 };
 const GetAllBookings = async () => {
   const result = await Bookings.find({})
@@ -95,9 +114,22 @@ const CancelBooking = async (id: string) => {
   ).populate("carId");
   return result;
 };
+const updateBookingStatus = async (
+  bookingId: Types.ObjectId | string, // Allow both types
+  status: string
+): Promise<IBooking | null> => {
+  const updatedBooking = await Bookings.findByIdAndUpdate(
+    bookingId,
+    { status },
+    { new: true }
+  );
+
+  return updatedBooking;
+};
 export const BookingService = {
   CreateBooking,
   GetAllBookings,
   GetUserBookings,
   CancelBooking,
+  updateBookingStatus,
 };

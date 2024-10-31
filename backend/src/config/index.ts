@@ -14,4 +14,7 @@ export default {
     refresh: process.env.JWT_REFRESH,
     refresh_expires_in: process.env.JWT_REFRESH_EXPIRES_IN,
   },
+  stripe: {
+    secretKey: process.env.STRIPE_SECRET_KEY,
+  },
 };
