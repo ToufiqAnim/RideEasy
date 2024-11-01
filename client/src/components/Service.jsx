@@ -1,4 +1,5 @@
 import React from "react";
+import NavigationButton from "./NavigationButton";
 
 const Services = () => {
   return (
@@ -51,9 +52,7 @@ const Services = () => {
               {service.title}
             </h3>
             <p className="text-gray-600 mb-4">{service.description}</p>
-            <button className="bg-orange-500 text-white rounded-full p-2 hover:bg-orange-600 transition-colors">
-              <span className="text-lg">➔</span>
-            </button>
+            <NavigationButton />
           </div>
         ))}
       </div>
@@ -65,7 +64,7 @@ const Services = () => {
           travel needs. From a diverse fleet of vehicles to flexible rental
           plans.
         </p>
-        <button className="bg-orange-500 text-white font-semibold py-3 px-8 rounded-full hover:bg-orange-600 transition-colors mt-12">
+        <button className="bg-customBackground text-white font-semibold py-3 px-8 rounded-full hover:bg-orange-600 transition-colors mt-12">
           View All Service
         </button>
       </div>

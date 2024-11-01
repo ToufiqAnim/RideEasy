@@ -79,7 +79,7 @@ const Footer = () => {
                 placeholder="Email..."
                 className="w-full p-2 rounded-md text-black focus:outline-none"
               />
-              <button className="p-2 bg-orange-500 rounded-md text-white hover:bg-orange-600">
+              <button className="p-2 bg-customBackground rounded-md text-white hover:bg-orange-600">
                 →
               </button>
             </div>

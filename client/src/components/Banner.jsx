@@ -30,7 +30,7 @@ const Banner = () => {
           </p>
         </div>
         <div className="flex flex-col md:flex-row justify-center space-y-3 md:space-y-0 md:space-x-4">
-          <button className="bg-orange-500 hover:bg-orange-600 text-white font-semibold py-2 px-6 md:px-8 lg:px-10 rounded-md text-sm md:text-lg">
+          <button className="bg-customBackground hover:bg-orange-600 text-white font-semibold py-2 px-6 md:px-8 lg:px-10 rounded-md text-sm md:text-lg">
             Book A Rental
           </button>
           <button className="bg-white text-gray-900 font-semibold py-2 px-6 md:px-8 lg:px-10 rounded-md text-sm md:text-lg hover:bg-gray-200">
