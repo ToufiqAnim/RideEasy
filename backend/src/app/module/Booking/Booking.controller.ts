@@ -8,11 +8,15 @@ import { JwtPayload } from "jsonwebtoken";
 const CreateBooking = catchAsync(async (req: Request, res: Response) => {
   const bookingData = req.body;
   const user = req.user as JwtPayload;
-  console.log(user);
+
+  console.log("User from JWT payload:", user);
+
   const { booking, clientSecret } = await BookingService.CreateBooking(
     bookingData,
     user
   );
+
+  console.log("Booking and clientSecret returned:", booking, clientSecret);
 
   sendResponse(res, {
     statusCode: httpStatus.CREATED,
@@ -24,6 +28,7 @@ const CreateBooking = catchAsync(async (req: Request, res: Response) => {
     },
   });
 });
+
 const GetAllBookings = catchAsync(async (req: Request, res: Response) => {
   const result = await BookingService.GetAllBookings();
   sendResponse(res, {

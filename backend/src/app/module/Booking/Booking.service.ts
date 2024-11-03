@@ -18,41 +18,21 @@ const CreateBooking = async (bookingData: IBooking, payload: JwtPayload) => {
 
   // Verify user existence
   const user = await Users.isUserExist(payload.email);
-
   if (!user) {
     throw new ApiError(httpStatus.NOT_FOUND, "No Data Found");
   }
-  const carData = await CarModel.findById(carId);
 
+  const carData = await CarModel.findById(carId);
   if (!carData) {
     throw new ApiError(httpStatus.NOT_FOUND, "Facility not found");
   }
 
-  // Check for booking availability
-  /*   const existingBooking = await Bookings.findOne({
-    carId,
-    $or: [
-      { startDate: { $lt: endDate, $gte: startDate } },
-      { endDate: { $gt: startDate, $lte: endDate } },
-    ],
-  });
-
-  if (existingBooking) {
-    throw new ApiError(
-      httpStatus.CONFLICT,
-      "Facility is unavailable during the requested time slot"
-    );
-  } */
-
   // Payable Amount Calculation
   const start = new Date(startDate);
   const end = new Date(endDate);
-
-  // Calculate the number of days
   const timeDifference = end.getTime() - start.getTime();
-  const days = Math.ceil(timeDifference / (1000 * 3600 * 24)); // Calculate days
-
-  const payableAmount = days * carData.pricing; // Calculate based on price per day
+  const days = Math.ceil(timeDifference / (1000 * 3600 * 24));
+  const payableAmount = days * carData.pricing;
 
   // Create a payment intent with Stripe
   const paymentIntent = await stripe.paymentIntents.create({
@@ -60,6 +40,8 @@ const CreateBooking = async (bookingData: IBooking, payload: JwtPayload) => {
     currency: "usd",
     metadata: { bookingId: new Types.ObjectId().toString() },
   });
+
+  console.log("Created payment intent:", paymentIntent);
 
   // Create new booking
   const newBooking = await Bookings.create({
@@ -70,16 +52,14 @@ const CreateBooking = async (bookingData: IBooking, payload: JwtPayload) => {
     status: "pending",
   });
 
-  // Populate user and car data after creating the booking
-  /*   const populatedBooking = await Bookings.findById(newBooking._id)
-    .populate("userId")
-    .populate("carId"); */
+  console.log("Returning clientSecret:", paymentIntent.client_secret);
 
   return {
     booking: newBooking,
     clientSecret: paymentIntent.client_secret,
   };
 };
+
 const GetAllBookings = async () => {
   const result = await Bookings.find({})
     .populate("carId")
