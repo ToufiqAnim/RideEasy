@@ -3,22 +3,22 @@ import cors from "cors";
 import router from "./app/routes";
 import globalErrorHandler from "./app/middleware/globalErrorHandler";
 import cookieParser from "cookie-parser";
-
+import httpStatus from "http-status";
 const app: Application = express();
 
-const corsOptions = {
-  origin: ["https://easyride-vert.vercel.app/"],
-  credentials: true,
-};
-
+app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cookieParser());
-
-app.use(cors(corsOptions));
+const allowedOrigins = ["https://easyride-client.vercel.app/"];
+app.use(
+  cors({
+    origin: allowedOrigins,
+    credentials: true,
+  })
+);
 
 app.use(express.urlencoded({ extended: true }));
 app.use("/api", router);
-import httpStatus = require("http-status");
 
 //global error handler
 app.use(globalErrorHandler);
