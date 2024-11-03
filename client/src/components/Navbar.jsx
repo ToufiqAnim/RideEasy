@@ -10,12 +10,11 @@ const Navbar = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  console.log(user);
   const handleLogout = () => {
     dispatch(logout());
     navigate("/signin");
   };
-  console.log(user);
+
   return (
     <>
       <div className="navbar bg-base-100 p-7  mb-5 md:px-52">
@@ -42,13 +41,13 @@ const Navbar = () => {
               className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow"
             >
               <li>
-                <a>Cars</a>
+                <Link to="/cars">Cars</Link>
               </li>
               <li>
-                <a href="">About us</a>
+                <Link to="/cars">About u</Link>
               </li>
               <li>
-                <a>Contact Us</a>
+                <Link to="/cars">Contact Us</Link>
               </li>
             </ul>
           </div>
@@ -59,13 +58,13 @@ const Navbar = () => {
         <div className="navbar-center hidden lg:flex">
           <ul className="menu menu-horizontal px-1">
             <li>
-              <a>Cars</a>
+              <Link to="/cars">Cars</Link>
             </li>
             <li>
-              <a href="">About us</a>
+              <Link to="/cars">About u</Link>
             </li>
             <li>
-              <a>Contact Us</a>
+              <Link to="/cars">Contact Us</Link>
             </li>
           </ul>
         </div>

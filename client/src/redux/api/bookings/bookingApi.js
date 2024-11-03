@@ -1,4 +1,4 @@
-import { baseApi } from "../baseApi";
+import baseApi from "../baseApi";
 
 const bookingApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
@@ -19,7 +19,7 @@ const bookingApi = baseApi.injectEndpoints({
     createBookings: builder.mutation({
       query: (data) => ({
         url: "/bookings/create-bookings",
-        method: "POSt",
+        method: "POST",
         body: data,
       }),
       invalidatesTags: ["Bookings"],

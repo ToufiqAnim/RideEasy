@@ -74,16 +74,6 @@ const Testimonials = () => {
           </div>
         ))}
       </div>
-
-      {/* Pagination Buttons */}
-      <div className="flex justify-center mt-12 space-x-4">
-        <button className="bg-orange-500 text-white p-3 rounded-full hover:bg-orange-600 transition-colors">
-          ←
-        </button>
-        <button className="bg-orange-500 text-white p-3 rounded-full hover:bg-orange-600 transition-colors">
-          →
-        </button>
-      </div>
     </div>
   );
 };

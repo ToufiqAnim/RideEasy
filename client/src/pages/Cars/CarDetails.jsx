@@ -1,12 +1,14 @@
-import React from "react";
-import { useParams } from "react-router-dom";
+import React, { useState } from "react";
+import { Link, useParams } from "react-router-dom";
 import { useGetSingleCarQuery } from "../../redux/api/car/carApi"; // Custom hook to get single car data
 import RentServiceInfo from "../../components/RentServiceInfo";
 import PoliciesAccordion from "../../components/PolicyAccordion";
+import BookingForm from "../Bookings/BookingForm";
 
 const CarDetails = () => {
-  const { id } = useParams(); // Fetch the car ID from the URL parameters
-  const { data, isLoading, error } = useGetSingleCarQuery(id); // Use the custom hook to fetch single car details
+  const { id } = useParams();
+  const { data, isLoading, error } = useGetSingleCarQuery(id); //
+  const [showModal, setShowModal] = useState(false);
 
   if (isLoading) {
     return <div>Loading...</div>; // Loading indicator
@@ -49,13 +51,13 @@ const CarDetails = () => {
         <div className="absolute inset-0 flex flex-col items-center justify-center text-white text-center space-y-2">
           <h1 className="text-3xl md:text-5xl font-bold">{`${make} ${model}`}</h1>
           <nav className="text-sm md:text-base text-gray-300">
-            <a href="/" className="hover:text-white">
+            <Link to="/" className="hover:text-white">
               Home
-            </a>
+            </Link>
             /
-            <a href="/cars" className="hover:text-white">
+            <Link to="/cars" className="hover:text-white">
               Cars
-            </a>
+            </Link>
             / <span className="text-orange-500">{`${make} ${model}`}</span>
           </nav>
         </div>
@@ -115,16 +117,31 @@ const CarDetails = () => {
                 availability ? "text-green-500" : "text-red-500"
               }`}
             >
-              {availability ? "Available" : "Not Available"}
+              {availability
+                ? "Currently Available"
+                : "Not Available at the Moment"}
             </p>
           </div>
 
           {/* Booking and Contact Buttons */}
           <div className="flex items-center gap-2 mt-6">
-            <button className="bg-[#ff3600] text-white py-2 px-4 rounded-lg hover:bg-orange-600 flex items-center gap-2">
-              Book Now
-              <span>→</span>
-            </button>
+            {availability ? (
+              <button
+                className="bg-[#ff3600] text-white py-2 px-4 rounded-lg hover:bg-orange-600 flex items-center gap-2"
+                onClick={() => setShowModal(true)}
+              >
+                Book Now
+                <span>→</span>
+              </button>
+            ) : (
+              <button
+                className="bg-gray-300 text-gray-600 py-2 px-4 rounded-lg cursor-not-allowed flex items-center gap-2"
+                disabled
+              >
+                Not Available
+                <span>→</span>
+              </button>
+            )}
           </div>
         </div>
 
@@ -163,6 +180,7 @@ const CarDetails = () => {
           <RentServiceInfo />
           <PoliciesAccordion />
         </div>
+        <BookingForm showModal={showModal} setShowModal={setShowModal} />
       </div>
     </>
   );

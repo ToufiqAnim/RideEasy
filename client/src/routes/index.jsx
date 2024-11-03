@@ -5,6 +5,9 @@ import Cars from "../pages/Cars/Cars";
 import CarDetails from "../pages/Cars/CarDetails";
 import SignIn from "../pages/Auth/SignIn";
 import SignUp from "../pages/Auth/SignUp";
+import ProtectedRoute from "./ProtectedRoutes";
+import Bookings from "../pages/Bookings/Bookings";
+import AllCars from "../pages/Cars/AllCars";
 
 export const router = createBrowserRouter([
   {
@@ -17,7 +20,7 @@ export const router = createBrowserRouter([
       },
       {
         path: "/cars",
-        element: <Cars />,
+        element: <AllCars />,
       },
       {
         path: "/cars/:id",
@@ -30,6 +33,14 @@ export const router = createBrowserRouter([
       {
         path: "/signup",
         element: <SignUp />,
+      },
+      {
+        path: "bookings/:carId",
+        element: (
+          <ProtectedRoute role="user">
+            <Bookings></Bookings>
+          </ProtectedRoute>
+        ),
       },
     ],
   },
