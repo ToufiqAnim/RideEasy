@@ -7,7 +7,6 @@ import httpStatus from "http-status";
 const app: Application = express();
 
 app.use(express.json());
-app.use(cookieParser());
 const allowedOrigins = [
   "https://easyride-client.vercel.app",
   "https://easyride-client-6aznw8s02-toufiqanims-projects.vercel.app",
@@ -19,6 +18,7 @@ app.use(
     credentials: true,
   })
 );
+app.use(cookieParser());
 
 app.use(express.urlencoded({ extended: true }));
 app.use("/api", router);
