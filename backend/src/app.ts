@@ -7,14 +7,14 @@ import httpStatus from "http-status";
 const app: Application = express();
 
 app.use(express.json());
-/* const allowedOrigins = [
+const allowedOrigins = [
   "https://easyride-client.vercel.app",
   "https://easyride-client-6aznw8s02-toufiqanims-projects.vercel.app",
 ];
- */
+
 app.use(
   cors({
-    origin: true,
+    origin: allowedOrigins,
     credentials: true,
   })
 );
