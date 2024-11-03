@@ -20,8 +20,9 @@ const catchAsync_1 = require("../../../shared/catchAsync");
 const CreateBooking = (0, catchAsync_1.catchAsync)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const bookingData = req.body;
     const user = req.user;
-    console.log(user);
+    console.log("User from JWT payload:", user);
     const { booking, clientSecret } = yield Booking_service_1.BookingService.CreateBooking(bookingData, user);
+    console.log("Booking and clientSecret returned:", booking, clientSecret);
     (0, sendResponse_1.sendResponse)(res, {
         statusCode: http_status_1.default.CREATED,
         success: true,
