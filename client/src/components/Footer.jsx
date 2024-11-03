@@ -7,7 +7,7 @@ const Footer = () => {
         <div className="flex flex-wrap justify-between items-start gap-8">
           {/* Logo and Description */}
           <div className="w-full md:w-1/4">
-            <h2 className="text-2xl font-bold text-orange-500">RIDEEASY</h2>
+            <h2 className="text-2xl font-bold text-[#ff3600]">RIDEEASY</h2>
             <p className="mt-2 text-sm">
               Experience the ease and convenience of renting a car with
               RIDEEASY.

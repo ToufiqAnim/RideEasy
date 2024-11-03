@@ -6,13 +6,15 @@ import { RouterProvider } from "react-router-dom";
 import { router } from "./routes/index.jsx";
 import { Provider } from "react-redux";
 import { persistor, store } from "./redux/store.js";
+
+import { Toaster } from "sonner";
 import { PersistGate } from "redux-persist/integration/react";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
-        {/* <Toaster position="top-center" /> */}
+        <Toaster position="top-center" />
         <RouterProvider router={router} />
       </PersistGate>
     </Provider>

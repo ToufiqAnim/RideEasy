@@ -11,9 +11,10 @@ import {
   REHYDRATE,
 } from "redux-persist";
 import { configureStore } from "@reduxjs/toolkit";
-import { baseApi } from "./api/baseApi";
+import baseApi from "./api/baseApi";
+
 const persistConfig = {
-  key: "root",
+  key: "auth",
   storage,
 };
 

@@ -1,9 +1,22 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+
+import { useDispatch, useSelector } from "react-redux";
+import { logout, selectCurrentUser } from "../redux/feature/authSlice";
+import { User2Icon } from "lucide-react";
 
 const Navbar = () => {
+  const user = useSelector(selectCurrentUser);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  console.log(user);
+  const handleLogout = () => {
+    dispatch(logout());
+    navigate("/signin");
+  };
+  console.log(user);
   return (
-    // Add the return statement here
     <>
       <div className="navbar bg-base-100 p-7  mb-5 md:px-52">
         <div className="navbar-start ">
@@ -39,7 +52,9 @@ const Navbar = () => {
               </li>
             </ul>
           </div>
-          <a className="btn btn-ghost text-2xl font-bold">RideEasy</a>
+          <Link to="/" className="btn btn-ghost text-2xl font-bold">
+            RideEasy
+          </Link>
         </div>
         <div className="navbar-center hidden lg:flex">
           <ul className="menu menu-horizontal px-1">
@@ -54,9 +69,27 @@ const Navbar = () => {
             </li>
           </ul>
         </div>
-        <Link to={"/signin"} className="navbar-end">
-          <a className="btn text-xl">SignIn</a>
-        </Link>
+        {user ? (
+          <>
+            {" "}
+            <button
+              className="px-4 py-2 bg-red-500 text-white rounded-md font-medium hover:bg-red-600 transition"
+              onClick={handleLogout}
+            >
+              Logout
+            </button>
+            <div className="flex items-center justify-center gap-1">
+              <div className="ml-2 p-3 bg-customBackground border-1 rounded-full ]">
+                <User2Icon color="white" />
+              </div>
+              <p>{user?.name}</p>
+            </div>
+          </>
+        ) : (
+          <Link to="/signin" className="text-lg">
+            SignIn
+          </Link>
+        )}
       </div>
     </>
   );

@@ -4,10 +4,14 @@ import { Link, useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import { USER_ROLE } from "../../constant/UserConsatant";
 import { useSignUpMutation } from "../../redux/api/auth/authApi";
+import { useDispatch } from "react-redux";
+import { setAuth } from "../../redux/feature/authSlice";
 
 const SignUp = () => {
   const [signUp] = useSignUpMutation();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
   const {
     register,
     handleSubmit,
@@ -24,6 +28,8 @@ const SignUp = () => {
       const res = await signUp(signUpData).unwrap();
       console.log(res);
       if (res?.success) {
+        dispatch(setAuth({ user: res.data, token: res.data.accessToken }));
+
         toast.success(res?.message, { id: toastId, duration: 2000 });
         navigate("/");
       }
@@ -122,7 +128,7 @@ const SignUp = () => {
                 >
                   Phone
                 </label>
-                <div className="mt-2">
+                {/*      <div className="mt-2">
                   <input
                     id="phone"
                     {...register("phone", { required: "Phone is required" })}
@@ -134,10 +140,10 @@ const SignUp = () => {
                       {String(errors.phone?.message)}
                     </p>
                   )}
-                </div>
+                </div> */}
               </div>
 
-              <div>
+              {/*       <div>
                 <label
                   htmlFor="address"
                   className="block text-sm font-medium leading-6 text-gray-900"
@@ -159,7 +165,7 @@ const SignUp = () => {
                     </p>
                   )}
                 </div>
-              </div>
+              </div> */}
             </div>
 
             <div>

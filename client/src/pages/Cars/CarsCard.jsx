@@ -4,7 +4,6 @@ import NavigationButton from "../../components/NavigationButton";
 import { Link } from "react-router-dom";
 
 const CarsCard = ({ car }) => {
-  console.log(car?.images);
   return (
     <div className="p-4 border-gray-200 border rounded-lg hover:shadow-lg transition-shadow w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg shadow-lg">
       <img
