@@ -8,7 +8,11 @@ const app: Application = express();
 
 app.use(express.json());
 app.use(cookieParser());
-const allowedOrigins = ["https://easyride-client.vercel.app"];
+const allowedOrigins = [
+  "https://easyride-client.vercel.app",
+  "https://easyride-client-6aznw8s02-toufiqanims-projects.vercel.app",
+];
+
 app.use(
   cors({
     origin: allowedOrigins,
@@ -21,6 +25,15 @@ app.use("/api", router);
 
 //global error handler
 app.use(globalErrorHandler);
+
+app.use((req, res, next) => {
+  res.header(
+    "Access-Control-Allow-Origin",
+    "https://easyride-client.vercel.app"
+  );
+  res.header("Access-Control-Allow-Credentials", "true");
+  next();
+});
 
 //handle not found
 app.use((req: Request, res: Response, next: NextFunction) => {
