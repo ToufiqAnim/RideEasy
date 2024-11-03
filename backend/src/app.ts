@@ -6,10 +6,9 @@ import cookieParser from "cookie-parser";
 import httpStatus from "http-status";
 const app: Application = express();
 
-app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cookieParser());
-const allowedOrigins = ["https://easyride-client.vercel.app/"];
+const allowedOrigins = ["https://easyride-client.vercel.app"];
 app.use(
   cors({
     origin: allowedOrigins,
