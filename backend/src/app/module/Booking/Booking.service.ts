@@ -42,7 +42,7 @@ const CreateBooking = async (bookingData: IBooking, payload: JwtPayload) => {
     status: "pending",
   });
 
-  return { booking: newBooking, payableAmount };
+  return newBooking;
 };
 
 const GetAllBookings = async () => {
@@ -79,16 +79,18 @@ const CancelBooking = async (id: string) => {
   ).populate("carId");
   return result;
 };
-const updateBookingStatus = async (
-  bookingId: Types.ObjectId | string, // Allow both types
+const UpdateBookingStatus = async (
+  bookingId: Types.ObjectId | string,
   status: string
 ): Promise<IBooking | null> => {
   const updatedBooking = await Bookings.findByIdAndUpdate(
     bookingId,
-    { status },
+    { status: "confirmed" },
     { new: true }
   );
-
+  if (!updatedBooking) {
+    throw new ApiError(httpStatus.NOT_FOUND, "Booking not found");
+  }
   return updatedBooking;
 };
 export const BookingService = {
@@ -96,5 +98,5 @@ export const BookingService = {
   GetAllBookings,
   GetUserBookings,
   CancelBooking,
-  updateBookingStatus,
+  UpdateBookingStatus,
 };

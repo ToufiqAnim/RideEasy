@@ -13,7 +13,6 @@ const BookingSchema: Schema<IBooking> = new Schema(
       enum: ["confirmed", "pending", "cancelled"],
       default: "pending",
     },
-    paymentIntentId: { type: String, required: true },
   },
 
   { timestamps: true }

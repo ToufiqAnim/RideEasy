@@ -9,23 +9,13 @@ const CreateBooking = catchAsync(async (req: Request, res: Response) => {
   const bookingData = req.body;
   const user = req.user as JwtPayload;
 
-  console.log("User from JWT payload:", user);
-
-  const { booking, clientSecret } = await BookingService.CreateBooking(
-    bookingData,
-    user
-  );
-
-  console.log("Booking and clientSecret returned:", booking, clientSecret);
+  const booking = await BookingService.CreateBooking(bookingData, user);
 
   sendResponse(res, {
     statusCode: httpStatus.CREATED,
     success: true,
     message: "Booking created successfully",
-    data: {
-      booking,
-      clientSecret,
-    },
+    data: booking,
   });
 });
 
@@ -61,14 +51,18 @@ const CancelBooking = catchAsync(async (req: Request, res: Response) => {
   });
 });
 const UpdateBookingStatus = catchAsync(async (req: Request, res: Response) => {
-  const { bookingId } = req.params;
-  const { status } = req.body;
-  const result = await BookingService.updateBookingStatus(bookingId, status);
+  const { bookingId } = req.body;
+
+  const updatedBooking = await BookingService.UpdateBookingStatus(
+    bookingId,
+    "confirmed"
+  );
+
   sendResponse(res, {
-    success: true,
     statusCode: httpStatus.OK,
-    message: " Booking status updated successfully",
-    data: result,
+    success: true,
+    message: "Booking confirmed successfully",
+    data: updatedBooking,
   });
 });
 export const BookingController = {

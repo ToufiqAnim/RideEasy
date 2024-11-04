@@ -16,4 +16,5 @@ router.get(
   BookingController.GetUserBookings
 );
 router.delete("/:id", auth("user", "admin"), BookingController.CancelBooking);
+router.patch("/update", BookingController.UpdateBookingStatus);
 export const BookingRoutes = router;
