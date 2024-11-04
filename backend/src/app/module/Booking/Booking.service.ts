@@ -34,30 +34,15 @@ const CreateBooking = async (bookingData: IBooking, payload: JwtPayload) => {
   const days = Math.ceil(timeDifference / (1000 * 3600 * 24));
   const payableAmount = days * carData.pricing;
 
-  // Create a payment intent with Stripe
-  const paymentIntent = await stripe.paymentIntents.create({
-    amount: payableAmount * 100,
-    currency: "usd",
-    metadata: { bookingId: new Types.ObjectId().toString() },
-  });
-
-  console.log("Created payment intent:", paymentIntent);
-
-  // Create new booking
+  // Create new booking with pending status
   const newBooking = await Bookings.create({
     ...bookingData,
     userId: user._id,
     totalAmount: payableAmount,
-    paymentIntentId: paymentIntent.id,
     status: "pending",
   });
 
-  console.log("Returning clientSecret:", paymentIntent.client_secret);
-
-  return {
-    booking: newBooking,
-    clientSecret: paymentIntent.client_secret,
-  };
+  return { booking: newBooking, payableAmount };
 };
 
 const GetAllBookings = async () => {
