@@ -5,7 +5,7 @@ import CarsCard from "./CarsCard";
 const Cars = () => {
   const { data, isLoading } = useGetAllCarQuery();
   const carData = data?.data;
-
+  console.log(carData);
   // Reference to the carousel container
   const carouselRef = useRef(null);
 
@@ -45,7 +45,7 @@ const Cars = () => {
           {carData?.map((car) => (
             <div
               key={car?._id}
-              className="carousel-item flex-shrink-0 w-1/2 sm:w-1/3 md:w-1/4"
+              className="carousel-item flex-shrink-0 w- sm:w-1/2 md:w-1/4"
             >
               <CarsCard car={car} />
             </div>
