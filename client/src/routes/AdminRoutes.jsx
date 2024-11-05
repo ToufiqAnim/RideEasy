@@ -1,4 +1,4 @@
-import AdminDashboard from "../pages/Dashboard/Admin/AdminDashboard.jsx/AdminDashboardHome";
+import AdminDashboard from "../pages/Dashboard/Admin/AdminDashboard/AdminDashboardHome";
 import AllBookings from "../pages/Dashboard/Admin/Bookings/Allbookings";
 import BookingsDetails from "../pages/Dashboard/Admin/Bookings/BookingsDetails";
 import Cars from "../pages/Dashboard/Admin/Cars/Cars";

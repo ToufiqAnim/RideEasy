@@ -34,7 +34,6 @@ const AllBookings = () => {
           </thead>
           <tbody className="text-gray-600 text-sm font-light">
             {bookings?.data.map((booking) => {
-              // Find the car associated with this booking
               const car = cars?.data?.find(
                 (car) => car._id === booking.carId._id
               );
