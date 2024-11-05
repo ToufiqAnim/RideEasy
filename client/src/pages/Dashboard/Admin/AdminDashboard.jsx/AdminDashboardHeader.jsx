@@ -1,5 +1,3 @@
-import React from "react";
-
 import { Calendar, SmileIcon } from "lucide-react";
 import { useSelector } from "react-redux";
 import { selectCurrentUser } from "../../../../redux/feature/authSlice";

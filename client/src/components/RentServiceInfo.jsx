@@ -1,5 +1,3 @@
-import React from "react";
-
 const RentServiceInfo = () => {
   return (
     <div className=" mt-14">

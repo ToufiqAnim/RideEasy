@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useParams, useNavigate } from "react-router-dom";
 import { toast } from "sonner";
@@ -53,6 +53,7 @@ const UpdateCar = () => {
         toast.error(response.error?.data?.message || "Failed to update car.");
       }
     } catch (error) {
+      console.log(error);
       toast.error("An error occurred while updating the car.");
     }
   };

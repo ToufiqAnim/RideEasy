@@ -1,5 +1,3 @@
-import React from "react";
-
 const Banner = () => {
   return (
     <div className="relative bg-gray-900 text-white h-[500px] md:h-[600px] lg:h-[800px] flex flex-col items-center container mx-auto md:pt-36 md:rounded-3xl overflow-hidden">

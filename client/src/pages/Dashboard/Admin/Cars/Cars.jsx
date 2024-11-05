@@ -1,4 +1,3 @@
-import React from "react";
 import { useGetAllCarQuery } from "../../../../redux/api/car/carApi";
 
 const Cars = () => {

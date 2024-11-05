@@ -1,7 +1,5 @@
-import React from "react";
-
 import { Link } from "react-router-dom";
-import WelcomeHeaderUser from "./UserHeader.JSx";
+import WelcomeHeaderUser from "./UserHeader.jsx";
 
 const UserDashboard = () => {
   return (

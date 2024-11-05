@@ -1,5 +1,3 @@
-import React from "react";
-
 const ArticlesSection = () => {
   const articles = [
     {

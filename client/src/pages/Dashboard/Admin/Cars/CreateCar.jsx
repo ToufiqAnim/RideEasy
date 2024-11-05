@@ -1,4 +1,3 @@
-import React from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { useCreateCarMutation } from "../../../../redux/api/car/carApi";
@@ -40,6 +39,7 @@ const CreateCar = () => {
         toast.error(response.error?.data?.message || "Failed to create car.");
       }
     } catch (error) {
+      console.log(error);
       toast.error("An error occurred while creating the car.");
     }
   };

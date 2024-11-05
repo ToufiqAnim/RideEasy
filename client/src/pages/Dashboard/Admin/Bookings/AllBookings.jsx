@@ -1,4 +1,3 @@
-import React from "react";
 import { useGetAllBookingsByAdminQuery } from "../../../../redux/api/bookings/bookingApi";
 import { useGetAllCarQuery } from "../../../../redux/api/car/carApi";
 import { Link } from "react-router-dom";

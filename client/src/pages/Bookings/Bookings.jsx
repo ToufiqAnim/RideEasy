@@ -1,4 +1,3 @@
-import React from "react";
 import SelectedCar from "./SelectedCar";
 import { useParams } from "react-router-dom";
 
