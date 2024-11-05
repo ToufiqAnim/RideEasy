@@ -1,11 +1,9 @@
-/* 
-import React from "react";
-import AdminDashboard from "../pages/Dashboard/Admin/AdminDashboard/AdminDashboard";
-import CreateFacility from "../pages/Dashboard/Admin/Facility/CreateFacility";
-import AllBookings from "../pages/Dashboard/Admin/Bookings/AllBookings";
-import AdminBookingDetails from "../pages/Dashboard/Admin/Bookings/AdminBookingDetails";
-import UpdateFacility from "../pages/Dashboard/Admin/Facility/UpdateFacility";
-import Facility from "../pages/Dashboard/Admin/Facility/Facility";
+import AdminDashboard from "../pages/Dashboard/Admin/AdminDashboard.jsx/AdminDashboardHome";
+import AllBookings from "../pages/Dashboard/Admin/Bookings/Allbookings";
+import BookingsDetails from "../pages/Dashboard/Admin/Bookings/BookingsDetails";
+import Cars from "../pages/Dashboard/Admin/Cars/Cars";
+import CreateCar from "../pages/Dashboard/Admin/Cars/CreateCar";
+import UpdateCar from "../pages/Dashboard/Admin/Cars/UpdateCar";
 import CreateAdmin from "../pages/Dashboard/Admin/UserManagement/CreateAdmin";
 
 export const adminPaths = [
@@ -15,23 +13,19 @@ export const adminPaths = [
     element: <AdminDashboard></AdminDashboard>,
   },
   {
-    name: "Facility Management",
+    name: "Car Management",
     children: [
       {
-        name: "Create Facility",
-        path: "create-facility",
-        element: <CreateFacility></CreateFacility>,
-      },
-
-      {
-        path: "facility/:id",
-        element: <UpdateFacility></UpdateFacility>,
+        name: "Cars",
+        path: "car",
+        element: <Cars></Cars>,
       },
       {
-        name: "Facility",
-        path: "facility",
-        element: <Facility></Facility>,
+        name: "Create Car",
+        path: "create-car",
+        element: <CreateCar></CreateCar>,
       },
+      { name: "Update Car", path: "car/:id", element: <UpdateCar></UpdateCar> },
     ],
   },
   {
@@ -43,8 +37,9 @@ export const adminPaths = [
         element: <AllBookings></AllBookings>,
       },
       {
+        name: "Booking Details",
         path: "all-bookings/:bookingId",
-        element: <AdminBookingDetails></AdminBookingDetails>,
+        element: <BookingsDetails></BookingsDetails>,
       },
     ],
   },
@@ -59,4 +54,3 @@ export const adminPaths = [
     ],
   },
 ];
- */

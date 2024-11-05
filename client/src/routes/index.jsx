@@ -8,6 +8,10 @@ import SignUp from "../pages/Auth/SignUp";
 import ProtectedRoute from "./ProtectedRoutes";
 import Bookings from "../pages/Bookings/Bookings";
 import AllCars from "../pages/Cars/AllCars";
+import Dashboard from "../layout/Dashboard";
+import { generateRoutes } from "../utils/Generateroutes";
+import { adminPaths } from "./AdminRoutes";
+import { userPaths } from "./UserRoutes";
 
 export const router = createBrowserRouter([
   {
@@ -43,5 +47,23 @@ export const router = createBrowserRouter([
         ),
       },
     ],
+  },
+  {
+    path: "/admin",
+    element: (
+      <ProtectedRoute role="admin">
+        <Dashboard></Dashboard>
+      </ProtectedRoute>
+    ),
+    children: generateRoutes(adminPaths),
+  },
+  {
+    path: "/user",
+    element: (
+      <ProtectedRoute role="user">
+        <Dashboard></Dashboard>
+      </ProtectedRoute>
+    ),
+    children: generateRoutes(userPaths),
   },
 ]);

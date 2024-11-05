@@ -1,10 +1,10 @@
 import React from "react";
-import AdminHeader from "./AdminHeader";
+import AdminDashboardHeader from "./AdminDashboardHeader";
 
 const AdminDashboard = () => {
   return (
     <div>
-      <AdminHeader />
+      <AdminDashboardHeader />
     </div>
   );
 };

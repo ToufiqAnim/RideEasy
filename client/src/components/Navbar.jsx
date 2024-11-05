@@ -70,7 +70,6 @@ const Navbar = () => {
         </div>
         {user ? (
           <>
-            {" "}
             <button
               className="px-4 py-2 bg-red-500 text-white rounded-md font-medium hover:bg-red-600 transition"
               onClick={handleLogout}
@@ -82,6 +81,14 @@ const Navbar = () => {
                 <User2Icon color="white" />
               </div>
               <p>{user?.name}</p>
+              {user ? (
+                <Link
+                  to={`${user?.role}/dashboard`}
+                  className="text-lg font-medium text-gray-700 hover:text-indigo-600 transition"
+                >
+                  Dashboard
+                </Link>
+              ) : null}
             </div>
           </>
         ) : (

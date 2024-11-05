@@ -1,7 +1,6 @@
-/* import React from "react";
-import MyBookings from "../pages/Dashboard/User/MyBookings/MyBookings";
-import BookingDetailsUser from "../pages/Dashboard/User/MyBookings/UserBookingDetails";
-import UserDashboard from "../pages/Dashboard/User/UserDashboard/UserDashboard";
+import MyBookingDetails from "../pages/Dashboard/user/MyBookings/MyBookingDetails";
+import MyBookings from "../pages/Dashboard/user/MyBookings/MyBookings";
+import UserDashboard from "../pages/Dashboard/user/UserDashboard/UserDashboard";
 
 export const userPaths = [
   {
@@ -22,6 +21,6 @@ export const userPaths = [
   },
   {
     path: "user-bookings/:bookingId",
-    element: <BookingDetailsUser></BookingDetailsUser>,
+    element: <MyBookingDetails></MyBookingDetails>,
   },
-]; */
+];
