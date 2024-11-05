@@ -1,10 +1,18 @@
-import { Link } from "react-router-dom";
-import WelcomeHeaderUser from "./UserHeader.JSx";
+import { useSelector } from "react-redux";
+
+import { selectCurrentUser } from "../../../../redux/feature/authSlice";
+import moment from "moment";
 
 const UserDashboard = () => {
+  const currentUser = useSelector(selectCurrentUser);
+  const date = new Date();
+  const dateFormat = moment(date).format("MMMM DD YYYY");
   return (
     <div className="p-6">
-      <WelcomeHeaderUser></WelcomeHeaderUser>
+      <div className="bg-white shadow-lg rounded-lg  text-gray-800  mb-4 p-10">
+        <p className="mb-8">{dateFormat} </p>
+        <h1 className="text-4xl my-2">Welcome Back, {currentUser?.name} </h1>
+      </div>
     </div>
   );
 };
