@@ -20,7 +20,6 @@ export const userPaths = [
     element: <MyBookings></MyBookings>,
   },
   {
-    name: "Booking Details",
     path: "user-bookings/:bookingId",
     element: <MyBookingDetails></MyBookingDetails>,
   },

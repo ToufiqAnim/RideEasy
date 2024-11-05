@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { Home, Menu } from "lucide-react";
@@ -12,6 +12,7 @@ import { USER_ROLE } from "../constant/UserConsatant";
 const Sidebar = () => {
   const token = useSelector(useCurrentToken);
   const [isMobile, setIsMobile] = useState(false);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   // Decode the user token to get the role
   let user;
@@ -38,17 +39,17 @@ const Sidebar = () => {
   // Recursive function to render nested sidebar items
   const renderSidebarItems = (items) => {
     return items.map((item) => (
-      <div key={item.path || item.name}>
+      <div key={item.path || item.name} className="space-y-1">
         {item.path ? (
           <Link
             to={item.path}
-            className="block p-2 rounded-lg hover:bg-gray-700 text-white"
+            className="block p-2 rounded-lg hover:bg-gray-700 transition-colors"
           >
-            {item.name || "Untitled"}
+            {item.name}
           </Link>
         ) : (
           <span className="block p-2 text-white font-semibold">
-            {item.name || "Untitled"}
+            {item.name}
           </span>
         )}
         {item.children && (
@@ -61,49 +62,69 @@ const Sidebar = () => {
   };
 
   return (
-    <div className={`h-full ${isMobile ? "hidden" : "block"} md:block`}>
-      <div className="bg-gray-800 text-white h-screen p-4 flex flex-col justify-between">
-        <div className="space-y-4">
+    <div
+      className={`h-full ${isMobile ? "absolute z-50" : "relative"} md:block`}
+    >
+      <div
+        className={`bg-gray-800 text-white h-screen p-4 flex flex-col ${
+          isMobile ? "w-64" : "w-72"
+        }`}
+      >
+        <div className="flex items-center mb-4">
           <Link to="/" className="flex items-center gap-2 text-2xl font-bold">
             <Home className="text-3xl" />
             Home
           </Link>
-          <nav className="space-y-2">
-            {sidebarItems.length > 0 ? (
-              renderSidebarItems(sidebarItems)
-            ) : (
-              <p className="text-gray-400">No items available</p>
+        </div>
+        <nav className="space-y-2 flex-1 overflow-y-auto">
+          {sidebarItems.length > 0 ? (
+            renderSidebarItems(sidebarItems)
+          ) : (
+            <p className="text-gray-400">No items available</p>
+          )}
+        </nav>
+        {/* Mobile view dropdown button */}
+        {isMobile && (
+          <div className="relative">
+            <button
+              className="btn btn-primary flex items-center gap-2"
+              onClick={() => setIsDropdownOpen((prev) => !prev)}
+            >
+              <Menu className="text-xl" /> Menu
+            </button>
+            {isDropdownOpen && (
+              <div className="absolute right-0 mt-2 w-48 bg-gray-800 rounded-lg shadow-lg z-10">
+                <ul className="py-2">
+                  {sidebarItems.map((item) => (
+                    <li key={item.name}>
+                      <Link
+                        to={item.path || "#"}
+                        className="block px-4 py-2 hover:bg-gray-700 transition-colors"
+                      >
+                        {item.name}
+                      </Link>
+                      {item.children && (
+                        <ul className="pl-2">
+                          {item.children.map((child) => (
+                            <li key={child.path}>
+                              <Link
+                                to={child.path || "#"}
+                                className="block px-4 py-2 hover:bg-gray-700 transition-colors"
+                              >
+                                {child.name}
+                              </Link>
+                            </li>
+                          ))}
+                        </ul>
+                      )}
+                    </li>
+                  ))}
+                </ul>
+              </div>
             )}
-          </nav>
-        </div>
-      </div>
-
-      {/* Mobile view dropdown */}
-      {isMobile && (
-        <div className="p-4">
-          <button className="btn btn-primary flex items-center gap-2">
-            <Menu className="text-xl" /> Menu
-          </button>
-          <div className="dropdown dropdown-hover mt-2">
-            <ul className="menu bg-gray-800 p-2 rounded-lg shadow-lg text-white">
-              {sidebarItems.map((item) => (
-                <li key={item.name}>
-                  <Link to={item.path || "#"}>{item.name}</Link>
-                  {item.children && (
-                    <ul className="pl-4">
-                      {item.children.map((child) => (
-                        <li key={child.path}>
-                          <Link to={child.path || "#"}>{child.name}</Link>
-                        </li>
-                      ))}
-                    </ul>
-                  )}
-                </li>
-              ))}
-            </ul>
           </div>
-        </div>
-      )}
+        )}
+      </div>
     </div>
   );
 };

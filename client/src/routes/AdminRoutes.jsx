@@ -1,5 +1,5 @@
 import AdminDashboard from "../pages/Dashboard/Admin/AdminDashboard/AdminDashboardHome";
-import AllBookings from "../pages/Dashboard/Admin/Bookings/Allbookings";
+import AllBookings from "../pages/Dashboard/Admin/Bookings/AllBookings";
 import BookingsDetails from "../pages/Dashboard/Admin/Bookings/BookingsDetails";
 import Cars from "../pages/Dashboard/Admin/Cars/Cars";
 import CreateCar from "../pages/Dashboard/Admin/Cars/CreateCar";
@@ -37,7 +37,6 @@ export const adminPaths = [
         element: <AllBookings></AllBookings>,
       },
       {
-        name: "Booking Details",
         path: "all-bookings/:bookingId",
         element: <BookingsDetails></BookingsDetails>,
       },

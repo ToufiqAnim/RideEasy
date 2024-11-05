@@ -64,7 +64,7 @@ const AllBookings = () => {
                   <td className="py-3 px-6">{booking.status}</td>
                   <td className="py-3 px-6">{booking.paymentStatus}</td>
                   <td className="py-3 px-6">
-                    <Link to={`/all-bookings/${booking._id}`}>
+                    <Link to={`${booking._id}`}>
                       <button className="btn btn-primary">Details</button>
                     </Link>
                   </td>

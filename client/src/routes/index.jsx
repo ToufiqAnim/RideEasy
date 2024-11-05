@@ -1,7 +1,7 @@
 import { createBrowserRouter } from "react-router-dom";
 import MainLayout from "../layout/MainLayout";
-import Home from "../pages/Home"; // Assuming you have a Home component
-import Cars from "../pages/Cars/Cars";
+import Home from "../pages/Home";
+
 import CarDetails from "../pages/Cars/CarDetails";
 import SignIn from "../pages/Auth/SignIn";
 import SignUp from "../pages/Auth/SignUp";
