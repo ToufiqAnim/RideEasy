@@ -7,6 +7,6 @@ export interface IBooking {
   endDate: Date;
   totalAmount: number;
   status: "confirmed" | "pending" | "cancelled";
-  createdAt?: Date;
-  updatedAt?: Date;
+  paymentStatus: "succeeded" | "failed" | "pending";
+  paymentIntentId?: string;
 }

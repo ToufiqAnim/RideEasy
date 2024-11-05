@@ -3,8 +3,12 @@ import { IBooking } from "./Booking.interface";
 
 const BookingSchema: Schema<IBooking> = new Schema(
   {
-    carId: { type: mongoose.Schema.Types.ObjectId, ref: "Car" },
-    userId: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+    carId: { type: mongoose.Schema.Types.ObjectId, ref: "Car", required: true },
+    userId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+    },
     startDate: { type: Date, required: true },
     endDate: { type: Date, required: true },
     totalAmount: { type: Number, required: true },
@@ -13,6 +17,12 @@ const BookingSchema: Schema<IBooking> = new Schema(
       enum: ["confirmed", "pending", "cancelled"],
       default: "pending",
     },
+    paymentStatus: {
+      type: String,
+      enum: ["succeeded", "failed", "pending"],
+      default: "pending",
+    },
+    paymentIntentId: { type: String },
   },
 
   { timestamps: true }

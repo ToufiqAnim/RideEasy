@@ -53,7 +53,7 @@ const CancelBooking = catchAsync(async (req: Request, res: Response) => {
 const UpdateBookingStatus = catchAsync(async (req: Request, res: Response) => {
   const { bookingId } = req.body;
 
-  const updatedBooking = await BookingService.UpdateBookingStatus(
+  const updatedBooking = await BookingService.ConfirmBookingPayment(
     bookingId,
     "confirmed"
   );

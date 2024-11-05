@@ -17,7 +17,12 @@ const createPaymentIntent = async (bookingId: string, amount: number) => {
     paymentIntentId: paymentIntent.id,
   };
 };
+const RetrievePaymentIntent = async (paymentIntentId: string) => {
+  const paymentIntent = await stripe.paymentIntents.retrieve(paymentIntentId);
+  return paymentIntent;
+};
 
 export default {
   createPaymentIntent,
+  RetrievePaymentIntent,
 };

@@ -8,6 +8,7 @@ const car_routes_1 = require("../module/Cars/car.routes");
 const auth_route_1 = require("../module/Auth/auth.route");
 const user_routes_1 = require("../module/User/user.routes");
 const Booking_routes_1 = require("../module/Booking/Booking.routes");
+const payment_route_1 = require("../module/Payment/payment.route");
 const router = express_1.default.Router();
 const moduleRoutes = [
     {
@@ -25,6 +26,10 @@ const moduleRoutes = [
     {
         path: "/bookings",
         route: Booking_routes_1.BookingRoutes,
+    },
+    {
+        path: "/payment",
+        route: payment_route_1.PaymentRoutes,
     },
 ];
 moduleRoutes.forEach((route) => router.use(route.path, route.route));

@@ -4,19 +4,19 @@ export interface ICar {
   type: string;
   year: number;
   category: string;
-  features: string[];
-  specifications: {
-    mileage: string;
+  features?: string[];
+  specifications?: {
+    mileage?: string;
     topSpeed?: string;
     acceleration?: string;
     engine?: string;
     horsepower?: string;
-    transmission: string;
-    capacity: string;
+    transmission?: string;
+    capacity?: string;
   };
   pricing: number;
-  availability: boolean;
-  images: string[];
+  availability?: boolean;
+  images?: string[];
 }
 export const carSearchableFields = ["make", "model", "category", "type"];
 export type ICarFilters = {

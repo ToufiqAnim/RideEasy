@@ -20,17 +20,12 @@ const catchAsync_1 = require("../../../shared/catchAsync");
 const CreateBooking = (0, catchAsync_1.catchAsync)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const bookingData = req.body;
     const user = req.user;
-    console.log("User from JWT payload:", user);
-    const { booking, clientSecret } = yield Booking_service_1.BookingService.CreateBooking(bookingData, user);
-    console.log("Booking and clientSecret returned:", booking, clientSecret);
+    const booking = yield Booking_service_1.BookingService.CreateBooking(bookingData, user);
     (0, sendResponse_1.sendResponse)(res, {
         statusCode: http_status_1.default.CREATED,
         success: true,
         message: "Booking created successfully",
-        data: {
-            booking,
-            clientSecret,
-        },
+        data: booking,
     });
 }));
 const GetAllBookings = (0, catchAsync_1.catchAsync)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -64,14 +59,13 @@ const CancelBooking = (0, catchAsync_1.catchAsync)((req, res) => __awaiter(void 
     });
 }));
 const UpdateBookingStatus = (0, catchAsync_1.catchAsync)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { bookingId } = req.params;
-    const { status } = req.body;
-    const result = yield Booking_service_1.BookingService.updateBookingStatus(bookingId, status);
+    const { bookingId } = req.body;
+    const updatedBooking = yield Booking_service_1.BookingService.ConfirmBookingPayment(bookingId, "confirmed");
     (0, sendResponse_1.sendResponse)(res, {
-        success: true,
         statusCode: http_status_1.default.OK,
-        message: " Booking status updated successfully",
-        data: result,
+        success: true,
+        message: "Booking confirmed successfully",
+        data: updatedBooking,
     });
 }));
 exports.BookingController = {

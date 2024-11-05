@@ -12,4 +12,5 @@ router.post("/create-bookings", (0, auth_1.default)("user", "admin"), Booking_co
 router.get("/", (0, auth_1.default)("user", "admin"), Booking_controller_1.BookingController.GetAllBookings);
 router.get("/user-bookings", (0, auth_1.default)("user", "admin"), Booking_controller_1.BookingController.GetUserBookings);
 router.delete("/:id", (0, auth_1.default)("user", "admin"), Booking_controller_1.BookingController.CancelBooking);
+router.patch("/update", Booking_controller_1.BookingController.UpdateBookingStatus);
 exports.BookingRoutes = router;

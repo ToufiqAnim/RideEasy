@@ -23,28 +23,19 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Bookings = void 0;
 const mongoose_1 = __importStar(require("mongoose"));
-const BookingSchema = new mongoose_1.Schema({
-    carId: { type: mongoose_1.default.Schema.Types.ObjectId, ref: "Car", required: true },
-    userId: {
-        type: mongoose_1.default.Schema.Types.ObjectId,
-        ref: "User",
-        required: true,
-    },
-    startDate: { type: Date, required: true },
-    endDate: { type: Date, required: true },
-    totalAmount: { type: Number, required: true },
+const PaymentSchema = new mongoose_1.Schema({
+    bookingId: { type: mongoose_1.Schema.Types.ObjectId, ref: "Booking", required: true },
+    userId: { type: mongoose_1.Schema.Types.ObjectId, ref: "User", required: true },
+    amount: { type: Number, required: true },
     status: {
         type: String,
-        enum: ["confirmed", "pending", "cancelled"],
-        default: "pending",
-    },
-    paymentStatus: {
-        type: String,
         enum: ["succeeded", "failed", "pending"],
-        default: "pending",
+        required: true,
     },
-    paymentIntentId: { type: String },
-}, { timestamps: true });
-exports.Bookings = mongoose_1.default.model("Bookings", BookingSchema);
+    paymentIntentId: { type: String, required: true },
+    createdAt: { type: Date, default: Date.now },
+    updatedAt: { type: Date, default: Date.now },
+});
+const PaymentModel = mongoose_1.default.model("Payment", PaymentSchema);
+exports.default = PaymentModel;

@@ -24,7 +24,7 @@ const CreateBooking = async (bookingData: IBooking, payload: JwtPayload) => {
 
   const carData = await CarModel.findById(carId);
   if (!carData) {
-    throw new ApiError(httpStatus.NOT_FOUND, "Facility not found");
+    throw new ApiError(httpStatus.NOT_FOUND, "Car Data not found");
   }
 
   // Payable Amount Calculation
@@ -79,18 +79,19 @@ const CancelBooking = async (id: string) => {
   ).populate("carId");
   return result;
 };
-const UpdateBookingStatus = async (
+const ConfirmBookingPayment = async (
   bookingId: Types.ObjectId | string,
   status: string
 ): Promise<IBooking | null> => {
   const updatedBooking = await Bookings.findByIdAndUpdate(
     bookingId,
-    { status: "confirmed" },
+    {
+      status: "confirmed",
+      paymentStatus: "succeeded",
+    },
     { new: true }
   );
-  if (!updatedBooking) {
-    throw new ApiError(httpStatus.NOT_FOUND, "Booking not found");
-  }
+
   return updatedBooking;
 };
 export const BookingService = {
@@ -98,5 +99,5 @@ export const BookingService = {
   GetAllBookings,
   GetUserBookings,
   CancelBooking,
-  UpdateBookingStatus,
+  ConfirmBookingPayment,
 };

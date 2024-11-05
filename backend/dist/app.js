@@ -8,22 +8,26 @@ const cors_1 = __importDefault(require("cors"));
 const routes_1 = __importDefault(require("./app/routes"));
 const globalErrorHandler_1 = __importDefault(require("./app/middleware/globalErrorHandler"));
 const cookie_parser_1 = __importDefault(require("cookie-parser"));
+const http_status_1 = __importDefault(require("http-status"));
 const app = (0, express_1.default)();
-const corsOptions = {
-    origin: ["http://localhost:5173"],
-    credentials: true,
-};
 app.use(express_1.default.json());
+const allowedOrigins = [
+    "https://easyride-client.vercel.app",
+    "https://easyride-client-6aznw8s02-toufiqanims-projects.vercel.app",
+    "http://localhost:5173",
+];
+app.use((0, cors_1.default)({
+    origin: allowedOrigins,
+    credentials: true,
+}));
 app.use((0, cookie_parser_1.default)());
-app.use((0, cors_1.default)(corsOptions));
 app.use(express_1.default.urlencoded({ extended: true }));
 app.use("/api", routes_1.default);
-const httpStatus = require("http-status");
 //global error handler
 app.use(globalErrorHandler_1.default);
 //handle not found
 app.use((req, res, next) => {
-    res.status(httpStatus.NOT_FOUND).json({
+    res.status(http_status_1.default.NOT_FOUND).json({
         success: false,
         message: "Not Found",
         errorMessages: [

@@ -18,7 +18,6 @@ const user_model_1 = require("../User/user.model");
 const ApiError_1 = __importDefault(require("../../../errors/ApiError"));
 const Booking_model_1 = require("./Booking.model");
 const car_model_1 = __importDefault(require("../Cars/car.model"));
-const mongoose_1 = require("mongoose");
 const stripe_1 = __importDefault(require("stripe"));
 const config_1 = __importDefault(require("../../../config"));
 const stripe = new stripe_1.default(config_1.default.stripe.secretKey, {
@@ -33,7 +32,7 @@ const CreateBooking = (bookingData, payload) => __awaiter(void 0, void 0, void 0
     }
     const carData = yield car_model_1.default.findById(carId);
     if (!carData) {
-        throw new ApiError_1.default(http_status_1.default.NOT_FOUND, "Facility not found");
+        throw new ApiError_1.default(http_status_1.default.NOT_FOUND, "Car Data not found");
     }
     // Payable Amount Calculation
     const start = new Date(startDate);
@@ -41,20 +40,9 @@ const CreateBooking = (bookingData, payload) => __awaiter(void 0, void 0, void 0
     const timeDifference = end.getTime() - start.getTime();
     const days = Math.ceil(timeDifference / (1000 * 3600 * 24));
     const payableAmount = days * carData.pricing;
-    // Create a payment intent with Stripe
-    const paymentIntent = yield stripe.paymentIntents.create({
-        amount: payableAmount * 100,
-        currency: "usd",
-        metadata: { bookingId: new mongoose_1.Types.ObjectId().toString() },
-    });
-    console.log("Created payment intent:", paymentIntent);
-    // Create new booking
-    const newBooking = yield Booking_model_1.Bookings.create(Object.assign(Object.assign({}, bookingData), { userId: user._id, totalAmount: payableAmount, paymentIntentId: paymentIntent.id, status: "pending" }));
-    console.log("Returning clientSecret:", paymentIntent.client_secret);
-    return {
-        booking: newBooking,
-        clientSecret: paymentIntent.client_secret,
-    };
+    // Create new booking with pending status
+    const newBooking = yield Booking_model_1.Bookings.create(Object.assign(Object.assign({}, bookingData), { userId: user._id, totalAmount: payableAmount, status: "pending" }));
+    return newBooking;
 });
 const GetAllBookings = () => __awaiter(void 0, void 0, void 0, function* () {
     const result = yield Booking_model_1.Bookings.find({})
@@ -83,9 +71,11 @@ const CancelBooking = (id) => __awaiter(void 0, void 0, void 0, function* () {
     }).populate("carId");
     return result;
 });
-const updateBookingStatus = (bookingId, // Allow both types
-status) => __awaiter(void 0, void 0, void 0, function* () {
-    const updatedBooking = yield Booking_model_1.Bookings.findByIdAndUpdate(bookingId, { status }, { new: true });
+const ConfirmBookingPayment = (bookingId, status) => __awaiter(void 0, void 0, void 0, function* () {
+    const updatedBooking = yield Booking_model_1.Bookings.findByIdAndUpdate(bookingId, {
+        status: "confirmed",
+        paymentStatus: "succeeded",
+    }, { new: true });
     return updatedBooking;
 });
 exports.BookingService = {
@@ -93,5 +83,5 @@ exports.BookingService = {
     GetAllBookings,
     GetUserBookings,
     CancelBooking,
-    updateBookingStatus,
+    ConfirmBookingPayment,
 };
