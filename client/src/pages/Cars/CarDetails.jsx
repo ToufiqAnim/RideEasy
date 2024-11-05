@@ -82,20 +82,20 @@ const CarDetails = () => {
           <div className=" mt-6 text-black  text-[16px]">
             <div className="flex justify-between py-2 border-b ">
               <span>Mileage</span>
-              <span>{specifications.mileage}</span>
+              <span>{specifications?.mileage}</span>
             </div>
             <div className="flex justify-between py-2 border-b ">
               <span>Passengers</span>
-              <span>{specifications.capacity}</span>
+              <span>{specifications?.capacity}</span>
             </div>
             <div className="flex justify-between py-2 border-b ">
               <span>Transmission</span>
-              <span>{specifications.transmission}</span>
+              <span>{specifications?.transmission}</span>
             </div>
 
             <div className="flex justify-between py-2">
               <span>Air Condition</span>
-              <span>{specifications.airCondition ? "Yes" : "No"}</span>
+              <span>{specifications?.airCondition ? "Yes" : "No"}</span>
             </div>
             {/* Features */}
             <h3 className="text-lg font-semibold text-gray-700 mt-6">

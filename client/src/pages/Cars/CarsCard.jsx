@@ -19,11 +19,11 @@ const CarsCard = ({ car }) => {
       <h4 className="text-lg font-semibold">{car.name}</h4>
       <p className="text-sm text-gray-700 mb-2">
         <span className="font-medium">Mileage: </span>
-        {car.specifications?.mileage}
+        {car?.specifications?.mileage}
       </p>
       <p className="text-sm text-gray-700 mb-4">
         <span className="font-medium">Passengers:</span>{" "}
-        {car.specifications.capacity}
+        {car?.specifications?.capacity}
       </p>
       <div className="flex items-center justify-between">
         <p className="text-xl font-bold">
