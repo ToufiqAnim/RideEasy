@@ -10,7 +10,6 @@ app.use(express.json());
 const allowedOrigins = [
   "https://easyride-client.vercel.app",
   "https://easyride-client-6aznw8s02-toufiqanims-projects.vercel.app",
-  "http://localhost:5173",
 ];
 
 app.use(
