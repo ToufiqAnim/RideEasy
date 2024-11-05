@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 
 const Bookings = () => {
   const { carId } = useParams();
-  console.log(carId);
+
   return (
     <div>
       <SelectedCar carId={carId} />
